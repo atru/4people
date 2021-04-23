@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\SourceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ArticleController::class, 'index'])->name('article.index');
+
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('article.show');
+
+Route::resource('/sources', SourceController::class);
+
+Route::post('/sources/{source}/crawl', [SourceController::class, 'crawl'])->name('source.crawl');
